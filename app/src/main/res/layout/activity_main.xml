@@ -7,39 +7,34 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/textview"
+        android:id="@+id/txtAktivitas"
         android:layout_width="wrap_content"
-        android:layout_height="42dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:textSize="24sp"
+        android:layout_marginBottom="8dp"
         android:text="@string/txtJudul1"
-        app:layout_constraintBottom_toBottomOf="@+id/btnTambah"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnTambah"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.423"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/btnTambah"
         android:layout_width="238dp"
         android:layout_height="54dp"
-        android:id="@+id/btnTambah"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:text="@string/btTambah"
-        app:layout_constraintBottom_toTopOf="@+id/btnLihat"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.414"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/textview"
-        app:layout_constraintVertical_bias="0.252"
-        />
+        app:layout_constraintTop_toBottomOf="@id/txtAktivitas"
+        app:layout_constraintVertical_bias="0.089"/>
 
     <Button
         android:layout_width="238dp"
@@ -50,13 +45,11 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="400dp"
+        android:layout_marginBottom="300dp"
         android:text="@string/btLihat"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@id/btnTambah"
+        app:layout_constraintVertical_bias="0.089"
         />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

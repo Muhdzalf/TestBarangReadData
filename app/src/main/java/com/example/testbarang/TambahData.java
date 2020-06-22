@@ -21,6 +21,7 @@ public class TambahData extends AppCompatActivity {
     private Button btSubmit;
     private EditText etKode;
     private EditText etnama;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,26 +29,42 @@ public class TambahData extends AppCompatActivity {
 
         etKode = (EditText) findViewById(R.id.editNo);
         etnama = (EditText) findViewById(R.id.editNama);
-        btSubmit = (Button) findViewById(R.id.btnOK);
+        btSubmit = (Button) findViewById(R.id.btnOk);
 
         database = FirebaseDatabase.getInstance().getReference();
 
-        btSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!(etKode.getText().toString().isEmpty())&&
-                        !(etnama.getText().toString().isEmpty()))
-                    submitBrg(new Barang(etKode.getText().toString(),
-                            etnama.getText().toString()));
-                else
-                    Toast.makeText(getApplicationContext(),"Data tidak boleh kosong",
-                            Toast.LENGTH_LONG).show();
+        final Barang barang = (Barang) getIntent().getSerializableExtra("data");
 
-                InputMethodManager imm = (InputMethodManager)
-                        getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(etKode.getWindowToken(),0);
-            }
-        });
+        if (barang != null){
+            etKode.setText(barang.getKode());
+            etnama.setText(barang.getNama());
+            btSubmit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    barang.setKode(etKode.getText().toString());
+                    barang.setNama(etnama.getText().toString());
+                    updateBarang(barang);
+                }
+            });
+        }else {
+            btSubmit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!(etKode.getText().toString().isEmpty())&&
+                            !(etnama.getText().toString().isEmpty()))
+                        submitBrg(new Barang(etKode.getText().toString(),
+                                etnama.getText().toString()));
+                    else
+                        Toast.makeText(getApplicationContext(),"Data tidak boleh kosong",
+                                Toast.LENGTH_LONG).show();
+
+                    InputMethodManager imm = (InputMethodManager)
+                            getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(etKode.getWindowToken(),0);
+                }
+            });
+        }
+
     }
     public void submitBrg (Barang brg){
         database.child("Barang").push().setValue(brg).addOnSuccessListener(this,
@@ -63,5 +80,19 @@ public class TambahData extends AppCompatActivity {
     }
     public static Intent getActIntent(Activity activity){
         return new Intent(activity, TambahData.class);
+    }
+
+    private void updateBarang(Barang brg) {
+        database.child("Barang")
+                .child(brg.getKode())
+                .setValue(brg)
+                .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getApplicationContext(), "Data berhasil di Update",
+                                Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                });
     }
 }
